@@ -17,8 +17,8 @@ class Game:
         self.icon = pygame.image.load('icon/icon.jpg')
         
         pygame.display.set_icon(self.icon)
-        pygame.display.set_caption('Game PtitKaChu')
-        self.background = pygame.image.load('image/Background.jpg')
+        pygame.display.set_caption('PtitKachu')
+        self.background = pygame.image.load('background/background.png')
         self.screen.blit(self.background , (0 , 0))
         
 
@@ -521,9 +521,12 @@ class Board:
         ds_pikachu = []
         for _,_, files in os.walk(path):
             for file in files:
-                img = pygame.image.load(path + file)
-                
-                ds_pikachu.append(img)
+                try:
+                    img = pygame.image.load(path + file)
+
+                    ds_pikachu.append(img)
+                except:
+                    print("Error image")
         return ds_pikachu
     def random_board(self ):
         self.list_pikachu = self.get_list_pikachu('./image/')
@@ -645,28 +648,32 @@ class transcript:
         self.dr_current_round = self.font.render(str(self.current_round) , True , self.white)
 
 class Time_bar:
-    def __init__(self , game):
+    def __init__(self, game):
         self.time = 225
         self.height_time = 450
         self.width_time = 50
         self.kc = self.height_time / self.time
-        self.time_bar = pygame.Surface((self.width_time , self.height_time))
+        self.time_bar = pygame.Surface((self.width_time, self.height_time))
+        self.time_bar.fill((255, 255, 255))  # Fill with white color
         self.time_bar_rect = self.time_bar.get_rect()
         self.time_bar_rect.x = 900
         self.time_bar_rect.y = 70
-        #self.time_bar_rect.bottomright = (950 , 520)
 
         self.screen = game.screen
+
     def draw(self):
-        self.screen.blit(self.time_bar , self.time_bar_rect )
+        self.screen.blit(self.time_bar, self.time_bar_rect)
+
     def update(self):
         if self.height_time >= self.kc:
             self.height_time -= self.kc
             self.time_bar_rect.y += self.kc
-            self.time_bar = pygame.Surface((50 , self.height_time))
+            self.time_bar = pygame.Surface((50, self.height_time))
+            self.time_bar.fill((255, 255, 255))  # Fill with white color
         else:
             self.height_time = 0
-            self.time_bar = pygame.Surface((50 , self.height_time))
+            self.time_bar = pygame.Surface((50, self.height_time))
+            self.time_bar.fill((255, 255, 255))  # Fill with white color
 
 if __name__ == '__main__':
     game = Game()
